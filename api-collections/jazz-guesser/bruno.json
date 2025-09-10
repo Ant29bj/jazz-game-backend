@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "jazz-guesser",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

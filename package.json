@@ -1,0 +1,34 @@
+{
+  "name": "jazz-game",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "app.ts",
+  "scripts": {
+    "build": "rimraf ./dist && tsc",
+    "start:dev": "tsx watch src/app.ts",
+    "start": "pnpm run build && node dist/app.js"
+  },
+  "keywords": [],
+  "author": "Jesus Antonio Bojorquez Espinoza",
+  "license": "ISC",
+  "packageManager": "pnpm@10.15.0",
+  "devDependencies": {
+    "@eslint/js": "^9.35.0",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.3.1",
+    "eslint": "^9.35.0",
+    "rimraf": "^6.0.1",
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.43.0"
+  },
+  "dependencies": {
+    "axios": "^1.11.0",
+    "better-sqlite3": "^12.2.0",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0"
+  }
+}
