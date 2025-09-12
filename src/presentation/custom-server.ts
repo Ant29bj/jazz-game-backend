@@ -1,5 +1,5 @@
 import express, { type Application, Router } from "express";
-
+import cors from 'cors';
 interface Options {
   port?: number;
   routes: Router;
@@ -18,6 +18,11 @@ export class CustomServer {
   }
 
   async start() {
+
+    this.app.use(cors({
+      origin: '*',
+      methods: ['GET']
+    }));
 
     this.app.use(this.routes);
 

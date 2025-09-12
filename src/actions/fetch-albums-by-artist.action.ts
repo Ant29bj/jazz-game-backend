@@ -1,5 +1,5 @@
 import { dreezerApi } from "@/api/dreezer.api.js";
-import type { SearchByResponse } from "@/dto/responses/sear-by-artist.dto.js";
+import type { SearchByResponse } from "@/dto/responses/searh-by-artist.dto.js";
 
 export interface QueryParams {
   limit?: string;

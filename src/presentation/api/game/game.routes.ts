@@ -9,6 +9,7 @@ export class GameRouter {
     const controller = new GameCotroller();
 
     router.get('/game', (req, res) => controller.findAlbum(req, res));
+    router.get('/game/tracks/:trackId', controller.fetchTracks)
     return router;
   }
 }

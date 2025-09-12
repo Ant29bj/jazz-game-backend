@@ -1,7 +1,8 @@
+import { fetchTrackAction } from "@/actions/fetch-track.action.js";
 import type { IDatabase } from "@/config/database/IDatabase.js";
 import { DatabaseProvider } from "@/config/database/implementation/database-provider.config.js";
 import type { Album, Artist } from "@/dto/responses/album-response.dto.js";
-import type { RandomAlbum, RandomAlbumArtist, RandomAlbumTrack } from "@/dto/responses/random-album.dot.js";
+import type { RandomAlbum, RandomAlbumArtist, RandomAlbumTrack } from "@/dto/responses/random-album.dto.js";
 import { SqlLoader } from "@/utils/sql-loader.utils.js";
 
 export class GameService {
@@ -71,5 +72,9 @@ export class GameService {
         name
       };
     });
+  }
+
+  async fetchTracks(trackId: number) {
+    return await fetchTrackAction(trackId);
   }
 }

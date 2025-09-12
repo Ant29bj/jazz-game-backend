@@ -9,6 +9,9 @@ export class GameCotroller {
   private readonly gameService: GameService;
   constructor () {
     this.gameService = new GameService(this.databaseProvider);
+
+    this.findAlbum = this.findAlbum.bind(this);
+    this.fetchTracks = this.fetchTracks.bind(this);
   }
 
 
@@ -28,6 +31,20 @@ export class GameCotroller {
       response.json(err);
     } finally {
       this.databaseProvider.disconnect();
+    }
+  }
+
+
+  async fetchTracks(request: Request, response: Response) {
+    try {
+      const { trackId } = request.params;
+
+      if (trackId) {
+        const result = await this.gameService.fetchTracks(+trackId);
+        response.status(200).json(result);
+      }
+    } catch (err) {
+      response.status(500).json(`Error: ${err}`)
     }
   }
 
