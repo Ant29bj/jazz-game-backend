@@ -8,6 +8,13 @@ export class AppRoutes {
     const router = Router();
     router.use('/api/admin', DataRouter.getRoutes());
     router.use('/api', GameRouter.getRoutes());
+
+    router.get('/health', (req, res) => {
+      res.status(200).json({
+        status: 'OK',
+        timestamp: new Date().toISOString()
+      });
+    });
     return router;
   }
 }
