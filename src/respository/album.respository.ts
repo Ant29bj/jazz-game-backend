@@ -61,7 +61,7 @@ export class AlbumRepository {
 
     // 2. INSERT album
     sql.albumInsert = {
-      sql: `INSERT INTO ALBUM (dreezer_id, title, cover, cover_small, cover_medium, cover_big, cover_xl, release_date, duration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      sql: `INSERT OR IGNORE INTO ALBUM (dreezer_id, title, cover, cover_small, cover_medium, cover_big, cover_xl, release_date, duration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       params: [
         albumData.id,
         albumData.title,
@@ -78,7 +78,7 @@ export class AlbumRepository {
     // 3. INSERTs to ARTIST_ALBUM
     uniqueArtists.forEach(artist => {
       sql.artistAlbumInserts.push({
-        sql: `INSERT INTO ARTIST_ALBUM (artist_id, album_id) VALUES ((SELECT id FROM ARTIST WHERE dreezer_id = ?), (SELECT id FROM ALBUM WHERE dreezer_id = ?))`,
+        sql: `INSERT OR IGNORE INTO ARTIST_ALBUM (artist_id, album_id) VALUES ((SELECT id FROM ARTIST WHERE dreezer_id = ?), (SELECT id FROM ALBUM WHERE dreezer_id = ?))`,
         params: [artist.id, albumData.id]
       });
     });
@@ -87,7 +87,7 @@ export class AlbumRepository {
     if (albumData.tracks?.data) {
       albumData.tracks.data.forEach(track => {
         sql.trackInserts.push({
-          sql: `INSERT INTO TRACK (dreezer_id, title, duration, album_id) VALUES (?, ?, ?, (SELECT id FROM ALBUM WHERE dreezer_id = ?))`,
+          sql: `INSERT OR IGNORE INTO TRACK (dreezer_id, title, duration, album_id) VALUES (?, ?, ?, (SELECT id FROM ALBUM WHERE dreezer_id = ?))`,
           params: [track.id, track.title, track.duration, albumData.id]
         });
       });
@@ -98,7 +98,7 @@ export class AlbumRepository {
       albumData.tracks.data.forEach(track => {
         uniqueArtists.forEach(artist => {
           sql.artistTrackInserts.push({
-            sql: `INSERT INTO ARTIST_TRACK (artist_id, track_id) VALUES ((SELECT id FROM ARTIST WHERE dreezer_id = ?), (SELECT id FROM TRACK WHERE dreezer_id = ?))`,
+            sql: `INSERT OR IGNORE INTO ARTIST_TRACK (artist_id, track_id) VALUES ((SELECT id FROM ARTIST WHERE dreezer_id = ?), (SELECT id FROM TRACK WHERE dreezer_id = ?))`,
             params: [artist.id, track.id]
           });
         });

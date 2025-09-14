@@ -77,10 +77,15 @@ export class DreezerService {
 
 
   async insertDatabaseData(albums: AlbumResponse[]) {
-    this.databaseProvider.connect();
-    const repository = new AlbumRepository(this.databaseProvider);
+    try {
+      this.databaseProvider.connect();
+      const repository = new AlbumRepository(this.databaseProvider);
 
-    albums.map((album) => repository.processAlbum(album));
+      albums.map((album) => repository.processAlbum(album));
+
+    } catch (error) {
+      console.log(`Fallo en ${error}`)
+    }
 
   }
 }
