@@ -18,10 +18,17 @@ export class CustomServer {
   }
 
   async start() {
-
     this.app.use(cors({
-      origin: '*',
-      methods: ['GET']
+      origin: [
+        'https://jazz-guesser-git-main-ant29bjs-projects.vercel.app',
+        'https://jazz-guesser.vercel.app',
+        'http://localhost:3000',
+        'http://localhost:5173',
+        'http://localhost:8080'
+      ],
+      methods: ['GET', 'OPTIONS'], // Solo GET para este endpoint
+      allowedHeaders: ['Content-Type', 'Authorization'],
+      credentials: true
     }));
 
     this.app.use(this.routes);
