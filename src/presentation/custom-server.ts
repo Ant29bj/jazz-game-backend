@@ -26,7 +26,7 @@ export class CustomServer {
         'http://localhost:5173',
         'http://localhost:8080'
       ],
-      methods: ['GET', 'OPTIONS'], // Solo GET para este endpoint
+      methods: ['GET', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization'],
       credentials: true
     }));

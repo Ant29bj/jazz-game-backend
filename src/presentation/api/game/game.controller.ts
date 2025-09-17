@@ -1,4 +1,5 @@
 import { DatabaseProvider } from "@/config/database/implementation/database-provider.config.js"
+import type { FetchTracksParams } from "@/dto/requests/params/fetch-track.param.js";
 import type { SearchArtistRequest } from "@/dto/requests/search-artist.request.js";
 import type { SearchArtistResponse } from "@/dto/responses/local/search-artist.response.js";
 import { GameService } from "@/service/game.service.js";
@@ -40,12 +41,12 @@ export class GameCotroller {
   }
 
 
-  async fetchTracks(request: Request, response: Response) {
+  async fetchTracks(request: Request<FetchTracksParams>, response: Response) {
     try {
       const { trackId } = request.params;
 
       if (trackId) {
-        const result = await this.gameService.fetchTracks(+trackId);
+        const result = await this.gameService.fetchTracks(trackId);
         response.status(200).json(result);
       }
     } catch (err) {
