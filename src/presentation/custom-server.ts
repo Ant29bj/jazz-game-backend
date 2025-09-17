@@ -22,6 +22,7 @@ export class CustomServer {
       origin: [
         'https://jazz-guesser-git-main-ant29bjs-projects.vercel.app',
         'https://jazz-guesser.vercel.app',
+        'https://jazzguesser.com',
         'http://localhost:3000',
         'http://localhost:5173',
         'http://localhost:8080'
