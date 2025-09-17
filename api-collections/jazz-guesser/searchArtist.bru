@@ -1,0 +1,15 @@
+meta {
+  name: searchArtist
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://localhost:3000/api/game/search/a
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

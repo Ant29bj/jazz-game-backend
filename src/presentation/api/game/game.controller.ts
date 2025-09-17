@@ -1,7 +1,11 @@
 import { DatabaseProvider } from "@/config/database/implementation/database-provider.config.js"
+import type { SearchArtistRequest } from "@/dto/requests/search-artist.request.js";
+import type { SearchArtistResponse } from "@/dto/responses/local/search-artist.response.js";
 import { GameService } from "@/service/game.service.js";
 import { error } from "console";
 import type { Request, Response } from "express"
+
+
 
 export class GameCotroller {
 
@@ -12,6 +16,7 @@ export class GameCotroller {
 
     this.findAlbum = this.findAlbum.bind(this);
     this.fetchTracks = this.fetchTracks.bind(this);
+    this.searchArtist = this.searchArtist.bind(this);
   }
 
 
@@ -48,4 +53,33 @@ export class GameCotroller {
     }
   }
 
+
+  async searchArtist(request: SearchArtistRequest, response: SearchArtistResponse) {
+    try {
+      const { artist } = request.params;
+      const { limit = 20 } = request.query;
+      if (!artist) throw new Error('Could no find artist param');
+      const result = await this.gameService.searchArtist(artist, +limit);
+
+      if (result.length === 0) {
+        response.status(400).json({
+          code: 404,
+          errMessage: `Could not find any ${artist}`
+        });
+      }
+
+      response.status(200).json({
+        artists: result,
+        itemCount: result ? result.length : 0,
+        searchQuery: artist
+      });
+
+    } catch (err) {
+      console.log(err)
+      response.status(500).json({
+        code: 500,
+        errMessage: `something went wrong ${err}`
+      });
+    }
+  }
 }

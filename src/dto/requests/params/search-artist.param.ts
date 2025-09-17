@@ -1,0 +1,1 @@
+export type SearchParams = { artist: string };

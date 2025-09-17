@@ -10,6 +10,7 @@ export class GameRouter {
 
     router.get('/game', (req, res) => controller.findAlbum(req, res));
     router.get('/game/tracks/:trackId', controller.fetchTracks)
+    router.get('/game/search/:artist', controller.searchArtist);
     return router;
   }
 }

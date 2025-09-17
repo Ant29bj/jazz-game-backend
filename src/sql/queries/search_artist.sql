@@ -1,0 +1,1 @@
+SELECT * FROM "ARTIST" WHERE NAME LIKE '%' || ? || '%' LIMIT ?;

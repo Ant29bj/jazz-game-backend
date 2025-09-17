@@ -1,8 +1,7 @@
 import { fetchTrackAction } from "@/actions/fetch-track.action.js";
 import type { IDatabase } from "@/config/database/IDatabase.js";
-import { DatabaseProvider } from "@/config/database/implementation/database-provider.config.js";
-import type { Album, Artist } from "@/dto/responses/album-response.dto.js";
-import type { RandomAlbum, RandomAlbumArtist, RandomAlbumTrack } from "@/dto/responses/random-album.dto.js";
+import type { RandomAlbum, RandomAlbumArtist } from "@/dto/responses/random-album.dto.js";
+import type { SearchArtist } from "@/dto/types/search-artist.type.js";
 import { SqlLoader } from "@/utils/sql-loader.utils.js";
 
 export class GameService {
@@ -76,5 +75,24 @@ export class GameService {
 
   async fetchTracks(trackId: number) {
     return await fetchTrackAction(trackId);
+  }
+
+
+  searchArtist(searchParam: string, limit: number) {
+    const searchQuery = SqlLoader.loadQuery('search_artist');
+    const queryResult = this.databaseProvider.query<SearchArtist>(searchQuery, [searchParam, limit]);
+    let filteredList: string[] = [];
+    if (queryResult.length === 0) {
+      console.log('Could not found artist');
+      return [];
+    }
+
+    queryResult.map(({ name, id }) => {
+      const innerList = name.split(';');
+      const clearInnerList = innerList.filter((name) => name.trim().toLowerCase().includes(searchParam.trim().toLowerCase()));
+      filteredList = [...filteredList, ...clearInnerList]
+    });
+
+    return filteredList;
   }
 }
