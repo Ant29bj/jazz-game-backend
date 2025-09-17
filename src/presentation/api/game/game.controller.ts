@@ -63,13 +63,18 @@ export class GameCotroller {
       const result = await this.gameService.searchArtist(artist, +limit);
 
       if (result.length === 0) {
-        response.status(400).json({
+        return response.status(404).json({
           code: 404,
           errMessage: `Could not find any ${artist}`
         });
       }
 
-      response.status(200).json({
+      console.log(JSON.stringify({
+        artists: result,
+        itemCount: result ? result.length : 0,
+        searchQuery: artist
+      }, null, 2))
+      return response.status(200).json({
         artists: result,
         itemCount: result ? result.length : 0,
         searchQuery: artist
@@ -77,10 +82,12 @@ export class GameCotroller {
 
     } catch (err) {
       console.log(err)
-      response.status(500).json({
+      return response.status(500).json({
         code: 500,
         errMessage: `something went wrong ${err}`
       });
+    } finally {
+      this.databaseProvider.disconnect();
     }
   }
 }

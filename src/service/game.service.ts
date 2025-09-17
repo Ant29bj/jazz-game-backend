@@ -80,6 +80,7 @@ export class GameService {
 
   searchArtist(searchParam: string, limit: number) {
     const searchQuery = SqlLoader.loadQuery('search_artist');
+    this.databaseProvider.connect();
     const queryResult = this.databaseProvider.query<SearchArtist>(searchQuery, [searchParam, limit]);
     let filteredList: string[] = [];
     if (queryResult.length === 0) {
@@ -87,12 +88,14 @@ export class GameService {
       return [];
     }
 
-    queryResult.map(({ name, id }) => {
+    queryResult.map(({ name }) => {
       const innerList = name.split(';');
       const clearInnerList = innerList.filter((name) => name.trim().toLowerCase().includes(searchParam.trim().toLowerCase()));
+
       filteredList = [...filteredList, ...clearInnerList]
     });
 
-    return filteredList;
+
+    return [...new Set(filteredList.map(n => n.trim()))];
   }
 }
