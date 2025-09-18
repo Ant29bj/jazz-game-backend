@@ -5,7 +5,6 @@ import type { AlbumInfo } from "@/dto/responses/searh-by-artist.dto.js";
 import { sleep } from "../utils/utils.api.js";
 import { DatabaseProvider } from "@/config/database/implementation/database-provider.config.js";
 import { AlbumRepository } from "@/respository/album.respository.js";
-import { fetchTrackAction } from "@/actions/fetch-track.action.js";
 
 export class DreezerService {
 

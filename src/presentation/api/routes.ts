@@ -6,7 +6,7 @@ export class AppRoutes {
 
   static getRoutes(): Router {
     const router = Router();
-    router.use('/api/admin', DataRouter.getRoutes());
+    // router.use('/api/admin', DataRouter.getRoutes());
     router.use('/api', GameRouter.getRoutes());
 
     router.get('/health', (req, res) => {

@@ -8,7 +8,7 @@ export class DataRouter {
     const router = Router();
     const controller = new DataController();
 
-    router.get('/fetch', controller.fetchArtist)
+    // router.get('/fetch', controller.fetchArtist)
     return router;
   }
 }
